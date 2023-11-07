@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import {
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
+
 
 export default function Signin() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState('');
-  const [error, setError] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
+  const [message, setMessage] = useState("");
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -15,6 +22,7 @@ export default function Signin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      dispatch(signInStart());
       const response = await fetch("/api/auth/signin", {
         method: "POST",
         headers: {
@@ -22,26 +30,22 @@ export default function Signin() {
         },
         body: JSON.stringify(formData),
       });
-
-      // console.log(await response.json());
-
-      if (response.status === 201) {
-        setError(true);
-        navigate("/");
-        setMessage("Sign-in successful!");
-      } else if (response.status === 400) {
-        // Invalid request (e.g., empty fields)
-        setError(true);
-        setMessage("Please fill out all fields.");
+      const data = await response.json();
+      if (data.success === false) {
+        dispatch(signInFailure(data));
+        return;
       }
+      dispatch(signInSuccess(data));
+      navigate("/");
     } catch (error) {
+      dispatch(signInFailure(error));
       console.log(error);
     }
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="font-semibold text-center text-3xl text-red-500 my-7">
-        Register To Begin
+        Welcome Back, Let's Sign In
       </h1>
       <form
         onSubmit={handleSubmit}
@@ -68,8 +72,12 @@ export default function Signin() {
           {" "}
           {loading ? "Loading..." : "Sign In"}
         </button>
+
+        
       </form>
-      {error && <p className="text-red-400 text-center mt-2">{message}</p>}{" "}
+      <p className="text-red-400 text-center mt-2">
+        {error ? error.message || "Something went wrong" : ""}
+      </p>
       <div className="flex gap-2 mt-5">
         <p>Not Registered?</p>
         <Link to={"/signin"}>
