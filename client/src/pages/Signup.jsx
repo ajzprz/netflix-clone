@@ -28,7 +28,7 @@ export default function Signup() {
       if (response.status === 201) {
         // User successfully signed up
         setError(true);
-        navigate("/");
+        navigate("/signin");
         setMessage("Sign-up successful!");
       } else if (response.status === 409) {
         // User already exists
