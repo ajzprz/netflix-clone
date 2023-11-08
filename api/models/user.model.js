@@ -19,7 +19,8 @@ const UserSchema = new mongoose.Schema(
     },
     photoUrl: {
       type: String,
-      default: "https://cdn-icons-png.flaticon.com/512/6596/6596121.png",
+      default:
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/1200px-User-avatar.svg.png",
     },
   },
   {

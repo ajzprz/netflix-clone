@@ -6,10 +6,7 @@ import {
   signInSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-<<<<<<< HEAD
 
-=======
->>>>>>> 2fb463b6c3f70397737b0ec119c5d841790b7b3b
 
 export default function Signin() {
   const dispatch = useDispatch();
@@ -36,11 +33,7 @@ export default function Signin() {
       const data = await response.json();
       if (data.success === false) {
         dispatch(signInFailure(data));
-<<<<<<< HEAD
         return;
-=======
-        return
->>>>>>> 2fb463b6c3f70397737b0ec119c5d841790b7b3b
       }
       dispatch(signInSuccess(data));
       navigate("/");
@@ -87,7 +80,7 @@ export default function Signin() {
       </p>
       <div className="flex gap-2 mt-5">
         <p>Not Registered?</p>
-        <Link to={"/signin"}>
+        <Link to={"/signup"}>
           <span className="text-indigo-200"> Sign Up Now ! </span>
         </Link>
       </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import { FaBell, FaSearch, FaUser } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 export default function Header() {
+  const { currentUser } = useSelector((state) => state.user);
   return (
     <div className=" max-w-6xl mx-auto flex flex-col justify-evenly sm:flex-row sm:justify-evenly sm:gap-10 p-4 flex-wrap gap-4">
       <Link to={"/"}>
@@ -50,8 +52,17 @@ export default function Header() {
         <Link to={"/"} className="hover:underline hover:text-gray-300">
           <FaBell />
         </Link>
-        <Link to={"/signup"} className="hover:underline hover:text-gray-300">
-          <FaUser />
+
+        <Link to={"/profile"} className="hover:underline hover:text-gray-300">
+          {currentUser ? (
+            <img
+              src={currentUser.photoUrl}
+              className="h-8 w-8 rounded-lg object-cover border border-red-500 p-1 "
+              alt="profilePic"
+            />
+          ) : (
+            <FaUser />
+          )}
         </Link>
       </div>
     </div>
