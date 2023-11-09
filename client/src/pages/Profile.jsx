@@ -1,16 +1,45 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  updateUserStart,
+  updateUserSuccess,
+  updateUserFailure,
+  signInStart,
+  signInFailure,
+  signInSuccess,
+} from "../redux/user/userSlice";
 
 export default function Profile() {
+  const dispatch = useDispatch();
   const { currentUser } = useSelector((state) => state.user);
   console.log(currentUser);
-  // const { formData, setFormData } = useState({
-  //   username: currentUser.username,
-  //   // password : currentUser.password,
-  //   email: currentUser.email,
-  // });
-  const handleInput = (e) => {};
-  const handleSubmit = () => {};
+  const [formData, setFormData] = useState({});
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
+  console.log(formData);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      dispatch(updateUserStart);
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if (data.success === false) {
+        dispatch(updateUserFailure(data));
+        return;
+      }
+      dispatch(updateUserSuccess(data));
+      console.log(data);
+    } catch (error) {
+      dispatch(updateUserFailure(error));
+    }
+  };
   return (
     <div className="text-center p-4 max-w-lg mx-auto">
       <h1 className="font-semibold text-3xl my-4"> Update Your Profile</h1>
@@ -22,7 +51,7 @@ export default function Profile() {
         />
         <input
           className="p-3 text bg-slate-100 rounded-lg"
-          // onChange={handleInput}
+          onChange={handleChange}
           type="text"
           id="username"
           placeholder="Username"
@@ -30,14 +59,14 @@ export default function Profile() {
         />
         <input
           className="p-3 text bg-slate-100 rounded-lg"
-          // onChange={handleInput}
+          onChange={handleChange}
           id="email"
           type="email"
           placeholder="Email"
           defaultValue={currentUser.email}
         />
         <input
-          onChange={handleInput}
+          onChange={handleChange}
           id="password"
           className="p-3 text bg-slate-100 rounded-lg"
           type="password"

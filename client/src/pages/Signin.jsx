@@ -53,10 +53,10 @@ export default function Signin() {
       >
         <input
           className="bg-slate-100 p-3 rounded-lg"
-          type="text"
+          type="email"
           onChange={handleChange}
-          id="username"
-          placeholder="Username"
+          id="email"
+          placeholder="email"
         />
         <input
           className="bg-slate-100 p-3 rounded-lg"
