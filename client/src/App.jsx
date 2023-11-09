@@ -9,6 +9,8 @@ import Tvshows from "./pages/Tvshows";
 import Header from "./components/Header";
 import PrivateRoute from "./components/PrivateRoute";
 import Profile from "./pages/Profile";
+import SingleMovie from "./pages/SingleMovie";
+import Originals from "./pages/Originals";
 
 export default function App() {
   return (
@@ -21,9 +23,11 @@ export default function App() {
         <Route path="/signup" element={<Signup />} />
         <Route element={<PrivateRoute />}>
           <Route path="/movies" element={<Movies />} />
+          <Route path="/movie/:id" element={<SingleMovie />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/tvshows" element={<Tvshows />} />
+          <Route path="/originals" element={<Originals />} />
         </Route>
-        <Route path="/tvshows" element={<Tvshows />} />
       </Routes>
     </BrowserRouter>
   );

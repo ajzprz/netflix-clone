@@ -2,7 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    background-color: #000;
-    color: #fef5f5;
+body {
+  background-color: #000;
+  color: #fef5f5;
+}
+
+Swiper {
+  --swiper-navigation-size: 100px;
+  --swiper-navigation-top-offset: 50%;
+  --swiper-navigation-sides-offset: 10px;
+  --swiper-navigation-color: var(--swiper-theme-color);
 }

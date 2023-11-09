@@ -6,14 +6,14 @@ import { Link } from "react-router-dom";
 export default function Header() {
   const { currentUser } = useSelector((state) => state.user);
   return (
-    <div className=" max-w-6xl mx-auto flex flex-col justify-evenly sm:flex-row sm:justify-evenly sm:gap-10 p-4 flex-wrap gap-4">
+    <div className=" max-w-6xl mx-auto flex flex-col justify-evenly sm:max-w-[95%] sm:flex-row sm:justify-between sm:gap-10 p-4 flex-wrap gap-4">
       <Link to={"/"}>
         {" "}
         <h1 className="text-3xl font-semibold text-center">
           Movies<span className="text-red-800">Hub</span>
         </h1>{" "}
       </Link>
-      <ul className="flex flex-row items-center gap-3 font-light justify-center text-xl">
+      <ul className="flex flex-row items-center gap-8 font-light justify-center text-2xl">
         <Link
           to={"/"}
           className="transition ease-in-out  hover:text-gray-300 hover:underline hover:scale-105 duration-300"
@@ -55,11 +55,14 @@ export default function Header() {
 
         <Link to={"/profile"} className="hover:underline hover:text-gray-300">
           {currentUser ? (
-            <img
-              src={currentUser.photoUrl}
-              className="h-8 w-8 rounded-lg object-cover border border-red-500 p-1 "
-              alt="profilePic"
-            />
+            <div className="flex flex-row gap-2">
+              <img
+                src={currentUser.photoUrl}
+                className="h-8 w-8 rounded-lg object-cover border border-red-500 p-1 "
+                alt="profilePic"
+              />
+              <span> {currentUser.username}</span>
+            </div>
           ) : (
             <FaUser />
           )}

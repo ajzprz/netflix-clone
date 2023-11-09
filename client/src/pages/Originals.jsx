@@ -8,16 +8,16 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 
-export default function Tvshows() {
-  const [tvShows, setTvShows] = useState([]);
+export default function Originals() {
+  const [originals, setOriginals] = useState([]);
   const { allMovies, loading, error } = useSelector((state) => state.movie);
   const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const filteredTvShows = allMovies.filter(
-      (movie) => movie.type === "TvShow"
+    const filterdOriginals = allMovies.filter(
+      (movie) => movie.type === "Originals"
     );
-    setTvShows(filteredTvShows);
+    setOriginals(filterdOriginals);
   }, [allMovies]);
 
   // console.log(tvShows);
@@ -53,8 +53,8 @@ export default function Tvshows() {
               },
             }}
           >
-            {tvShows &&
-              tvShows.map((movie, index) => (
+            {originals &&
+              originals.map((movie, index) => (
                 <SwiperSlide
                   className="h-[180px]"
                   key={index}
